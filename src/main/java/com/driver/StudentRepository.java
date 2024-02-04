@@ -24,6 +24,7 @@ public class StudentRepository {
         studentMap.put(sname,student);
     }
     public void addTeacher(String tname,Teacher teacher){
+        studentTeacherPair.put(tname,new ArrayList<>());
         teacherMap.put(tname,teacher);
     }
     public void addStudentTeacherPair(String student,String teacher){
