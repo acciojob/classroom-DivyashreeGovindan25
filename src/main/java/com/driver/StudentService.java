@@ -20,8 +20,6 @@ public class StudentService {
         sp.addTeacher(teacher.getName(),teacher);
     }
     public void addStudentTeacherPair(String student,String teacher){
-        Teacher teach = sp.getTeacherByName(teacher);
-        teach.setNumberOfStudents(teach.getNumberOfStudents()+1);
         sp.addStudentTeacherPair(student,teacher);
     }
     public Student getStudentByName(String name){

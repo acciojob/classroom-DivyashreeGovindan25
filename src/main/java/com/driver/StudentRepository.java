@@ -31,6 +31,8 @@ public class StudentRepository {
 //        List<String> studList = new ArrayList<>();
 //        if(studentTeacherPair.containsKey(teacher)) studList = studentTeacherPair.get(teacher);
 //        studList.add(student);
+        Teacher teach = teacherMap.get(teacher);
+        teach.setNumberOfStudents(teach.getNumberOfStudents()+1);
         studentTeacherPair.get(teacher).add(student);
     }
     public Student getStudentByName(String name){
