@@ -28,10 +28,10 @@ public class StudentRepository {
         teacherMap.put(tname,teacher);
     }
     public void addStudentTeacherPair(String student,String teacher){
-        List<String> studList = new ArrayList<>();
-        if(studentTeacherPair.containsKey(teacher)) studList = studentTeacherPair.get(teacher);
-        studList.add(student);
-        studentTeacherPair.put(teacher,studList);
+//        List<String> studList = new ArrayList<>();
+//        if(studentTeacherPair.containsKey(teacher)) studList = studentTeacherPair.get(teacher);
+//        studList.add(student);
+        studentTeacherPair.get(teacher).add(student);
     }
     public Student getStudentByName(String name){
         return studentMap.get(name);
@@ -40,7 +40,7 @@ public class StudentRepository {
         return teacherMap.get(name);
     }
     public List<String> getStudentByTeacher(String teacher){
-        return studentTeacherPair.containsKey(teacher) ? studentTeacherPair.get(teacher) : new ArrayList<>();
+        return studentTeacherPair.get(teacher);
     }
     public List<String> getAllStudents(){
         List<String> students = new ArrayList<>();
@@ -50,11 +50,16 @@ public class StudentRepository {
         return students;
     }
     public void deleteTeacher(String teacher){
+        List<String> stud = studentTeacherPair.get(teacher);
+        for(String sName : stud){
+            studentTeacherPair.remove(sName);
+        }
         teacherMap.remove(teacher);
         studentTeacherPair.remove(teacher);
     }
     public void deleteAllTeachers(){
-        teacherMap.clear();
-        studentTeacherPair.clear();
+        for(String tName : studentTeacherPair.keySet()){
+            deleteTeacher(tName);
+        }
     }
 }

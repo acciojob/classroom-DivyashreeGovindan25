@@ -25,8 +25,7 @@ public class StudentService {
         sp.addStudentTeacherPair(student,teacher);
     }
     public Student getStudentByName(String name){
-        Student student = null; // Assign student by calling service layer method
-        student = sp.getStudentByName(name);
+        Student student = sp.getStudentByName(name);; // Assign student by calling service layer method
         return student;
     }
     public Teacher getTeacherByName(String name){
