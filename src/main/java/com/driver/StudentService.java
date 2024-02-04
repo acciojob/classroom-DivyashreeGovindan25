@@ -4,42 +4,48 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Service
 public class StudentService {
     @Autowired
-    StudentRepository sp;
+    StudentRepository studentRepository;
+
     public void addStudent(Student student){
-        sp.addStudent(student.getName(),student);
+        studentRepository.addStudent(student);
     }
+
     public void addTeacher(Teacher teacher){
-        sp.addTeacher(teacher.getName(),teacher);
+        studentRepository.addTeacher(teacher);
     }
-    public void addStudentTeacherPair(String student,String teacher){
-        sp.addStudentTeacherPair(student,teacher);
+
+    public void addStudentTeacherPair(String student, String teacher){
+        studentRepository.addStudentTeacherPair(student,teacher);
     }
+
     public Student getStudentByName(String name){
-        Student student = sp.getStudentByName(name);; // Assign student by calling service layer method
-        return student;
+        return studentRepository.getStudentByName(name);
     }
+
     public Teacher getTeacherByName(String name){
-        Teacher teacher = sp.getTeacherByName(name); // Assign student by calling service layer method
-        return teacher;
+        return studentRepository.getTeacherByName(name);
     }
-    public List<String> getStudentByTeacher(String teacher){
-        return sp.getStudentByTeacher(teacher);
+
+    public List<String> getStudentsByTeacherName(String teacher){
+        return studentRepository.getStudentsByTeacherName(teacher);
     }
+
     public List<String> getAllStudents(){
-        return sp.getAllStudents();
+        return studentRepository.getAllStudents();
     }
-    public void deleteTeacher(String teacher){
-        sp.deleteTeacher(teacher);
+
+    public void deleteTeacherByName(String teacher){
+        studentRepository.deleteTeacherByName(teacher);
     }
+
     public void deleteAllTeachers(){
-        sp.deleteAllTeachers();
+        studentRepository.deleteAllTeachers();
     }
 }

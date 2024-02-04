@@ -1,67 +1,69 @@
 package com.driver;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 
 @Repository
 public class StudentRepository {
-    HashMap<String,Student> studentMap;
-    HashMap<String,Teacher> teacherMap;
-    HashMap<String, List<String>> studentTeacherPair;
-    StudentRepository(){
-        studentMap = new HashMap<>();
-        teacherMap = new HashMap<>();
-        studentTeacherPair = new HashMap<>();
+    HashMap<String , Student> studDb;
+    HashMap<String , Teacher> teacDb;
+    HashMap<String,List<String>> stDb;
+
+    public StudentRepository() {
+        this.studDb = new HashMap<>();
+        this.teacDb = new HashMap<>();
+        this.stDb = new HashMap<>();
     }
-    public void addStudent(String sname,Student student){
-        studentMap.put(sname,student);
+    public void addStudent(Student student){
+        studDb.put(student.getName(),student);
     }
-    public void addTeacher(String tname,Teacher teacher){
-        studentTeacherPair.put(tname,new ArrayList<>());
-        teacherMap.put(tname,teacher);
+
+    public void addTeacher(Teacher teacher){
+        teacDb.put(teacher.getName(),teacher);
+        stDb.put(teacher.getName(),new ArrayList<>());
     }
-    public void addStudentTeacherPair(String student,String teacher){
-//        List<String> studList = new ArrayList<>();
-//        if(studentTeacherPair.containsKey(teacher)) studList = studentTeacherPair.get(teacher);
-//        studList.add(student);
-        Teacher teach = teacherMap.get(teacher);
-        teach.setNumberOfStudents(teach.getNumberOfStudents()+1);
-        studentTeacherPair.get(teacher).add(student);
+
+    public void addStudentTeacherPair(String student, String teacher){
+        stDb.get(teacher).add(student);
+        Teacher teacher1 = teacDb.get(teacher);
+        teacher1.setNumberOfStudents(teacher1.getNumberOfStudents()+1);
     }
+
     public Student getStudentByName(String name){
-        return studentMap.get(name);
+        return studDb.get(name);
     }
+
     public Teacher getTeacherByName(String name){
-        return teacherMap.get(name);
+        return teacDb.get(name);
     }
-    public List<String> getStudentByTeacher(String teacher){
-        return studentTeacherPair.get(teacher);
+
+    public List<String> getStudentsByTeacherName(String teacher) {
+        return stDb.get(teacher);
+
     }
     public List<String> getAllStudents(){
-        List<String> students = new ArrayList<>();
-        for(String s : studentMap.keySet()){
-            students.add(s);
+        List<String> stud = new ArrayList<>();
+        for(String s : studDb.keySet()){
+            stud.add(s);
         }
-        return students;
+        return stud;
     }
-    public void deleteTeacher(String teacher){
-        List<String> stud = studentTeacherPair.get(teacher);
+
+    public void deleteTeacherByName(String teacher){
+        List<String> stud = stDb.get(teacher);
         for(String sName : stud){
-            studentTeacherPair.remove(sName);
+            studDb.remove(sName);
         }
-        teacherMap.remove(teacher);
-        studentTeacherPair.remove(teacher);
+        teacDb.remove(teacher);
+        stDb.remove(teacher);
     }
+
     public void deleteAllTeachers(){
-        for(String tName : studentTeacherPair.keySet()){
-            deleteTeacher(tName);
+        for(String tName : stDb.keySet()){
+            deleteTeacherByName(tName);
         }
     }
 }

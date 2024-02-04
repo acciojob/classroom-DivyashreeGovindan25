@@ -1,12 +1,16 @@
 package com.driver;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Student {
 
     private String name;
     private int age;
     private double averageScore;
 
-    public Student() {
+    public Student(){
+
     }
 
     public Student(String name, int age, double averageScore) {
